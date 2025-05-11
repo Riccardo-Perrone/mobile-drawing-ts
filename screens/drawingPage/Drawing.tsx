@@ -2,7 +2,7 @@ import SignatureScreen, {
   SignatureViewRef,
 } from "react-native-signature-canvas";
 import { useRef, useState } from "react";
-import { View, ColorValue, Button, Text, Dimensions } from "react-native";
+import { View, Button, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
@@ -30,20 +30,22 @@ const Drawing = ({ navigation, route }: any) => {
     ImagePicker.useCameraPermissions();
   const [statusMediaIP, requeststatusMediaIP] =
     ImagePicker.useMediaLibraryPermissions();
-  const [statusMedaiaL, requeststatusMedaiaL] = MediaLibrary.usePermissions();
+
+  // const [statusMedaiaL, requeststatusMedaiaL] = MediaLibrary.usePermissions();
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
   const ref = useRef<SignatureViewRef>(null);
 
   //controlli permessi
-  if (!statusMedaiaL || !statusMediaIP || !permissionCamera) {
+  if (!permissionResponse || !statusMediaIP || !permissionCamera) {
     return <View />;
   }
 
-  if (!statusMedaiaL.granted) {
+  if (!permissionResponse.granted) {
     return (
       <View>
         <Text>We need your permission to show the camera</Text>
-        <Button onPress={requeststatusMedaiaL} title="grant permission media" />
+        <Button onPress={requestPermission} title="grant permission media" />
       </View>
     );
   }
@@ -100,24 +102,27 @@ const Drawing = ({ navigation, route }: any) => {
     }
   };
 
-  const callbackPickImage = async (result: any) => {
-    console.log(result);
-
-    if (!result.cancelled) {
-      setState({
-        ...state,
-        imageUrl: result.base64,
-      });
+  const callbackPickImage = async (result: ImagePicker.ImagePickerResult) => {
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const asset = result.assets[0];
+      if (asset.base64) {
+        setState({
+          ...state,
+          imageUrl: asset.base64,
+        });
+      }
     }
   };
-  const callbackCameraImage = async (result: any) => {
-    console.log(result);
 
-    if (!result.cancelled) {
-      setState({
-        ...state,
-        imageUrl: result.base64,
-      });
+  const callbackCameraImage = async (result: ImagePicker.ImagePickerResult) => {
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const asset = result.assets[0];
+      if (asset.base64) {
+        setState({
+          ...state,
+          imageUrl: asset.base64,
+        });
+      }
     }
   };
   const handleTutorial = () => {

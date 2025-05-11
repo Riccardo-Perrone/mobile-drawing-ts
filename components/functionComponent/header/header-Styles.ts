@@ -2,7 +2,7 @@ import { StyleSheet, Platform, StatusBar } from "react-native";
 
 export default StyleSheet.create({
   containerHeader: {
-    height: 80,
+    height: 100,
     paddingRight: 20,
     paddingLeft: 20,
     margin: -3,

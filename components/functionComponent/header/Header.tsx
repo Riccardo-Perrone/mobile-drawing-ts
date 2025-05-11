@@ -1,5 +1,5 @@
-import { View, Text, Button } from "react-native";
-import React from "react";
+import { View, Text } from "react-native";
+import React, { JSX } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 import Style from "./header-Styles";

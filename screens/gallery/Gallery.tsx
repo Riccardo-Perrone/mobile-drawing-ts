@@ -1,5 +1,5 @@
 import { View, Text, FlatList, ListRenderItem, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import * as MediaLibrary from "expo-media-library";
 //style
 import Style from "./gallery-Styles";

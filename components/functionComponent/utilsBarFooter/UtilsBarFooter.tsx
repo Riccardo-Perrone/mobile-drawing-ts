@@ -9,6 +9,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 //styles
 import Style from "./utilsBarFooter-Style";
+import { MediaType } from "expo-media-library";
 
 interface Props {
   refDrow: any;
@@ -41,7 +42,7 @@ const UtilsBarHeader = (props: Props) => {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       base64: true,
       quality: 1,
@@ -52,13 +53,11 @@ const UtilsBarHeader = (props: Props) => {
   const CameraImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       base64: true,
       quality: 1,
     });
-
-    console.log(result);
 
     props.callbackCameraImage(result);
   };
